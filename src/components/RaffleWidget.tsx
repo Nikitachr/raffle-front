@@ -36,6 +36,7 @@ export const RaffleWidget = () => {
       // @ts-ignore
       ref.current.style = `transform: rotateY(${x}deg) rotateX(${y}deg) perspective(600px)`
     },
+    // @ts-ignore
     'document',
   )
 

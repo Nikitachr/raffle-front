@@ -15,7 +15,7 @@ function useOnClickOutside<T extends HTMLElement = HTMLElement>(
       return
     }
 
-    handler(event)
+    handler(event as MouseEvent)
   })
 }
 

@@ -1,15 +1,5 @@
 import { RefObject, useEffect, useRef } from 'react'
 
-function useEventListener<K extends keyof WindowEventMap>(
-  eventName: K,
-  handler: (event: WindowEventMap[K]) => void,
-): void
-function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = HTMLDivElement>(
-  eventName: string,
-  handler: (event: HTMLElementEventMap[K]) => void,
-  element: string,
-): void
-
 function useEventListener<
   KW extends keyof WindowEventMap,
   KH extends keyof HTMLElementEventMap,
@@ -29,6 +19,7 @@ function useEventListener<
   useEffect(() => {
     // Define the listening target
     const targetElement: T | Window = element?.current || window
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!(targetElement && targetElement.addEventListener)) {
       return
     }

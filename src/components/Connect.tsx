@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useMoralis, useMoralisWeb3Api, useNativeBalance } from 'react-moralis'
+import { useMoralis, useNativeBalance } from 'react-moralis'
 import { getEllipsisTxt } from '@utils/index'
 import { Blockie } from 'web3uikit'
 import { MUMBAI_ID } from '@constants/index'
@@ -14,7 +14,7 @@ export const Connect = () => {
 
   if (!isAuthenticated) {
     return (
-      <button type="button" className="button !px-6 !py-2" onClick={() => authenticate({ chainId: MUMBAI_ID })}>
+      <button type="button" className="button !px-6 !py-2" onClick={() => authenticate({ chainId: +MUMBAI_ID })}>
         Connect wallet
       </button>
     )

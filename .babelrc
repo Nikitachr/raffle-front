@@ -18,7 +18,9 @@
           ".ts",
           ".tsx"
         ]
-      }
-    ]
+      },
+      "styled-components"
+    ],
+    "inline-react-svg"
   ]
 }

@@ -19,8 +19,23 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@src/*": [
-        "./src/*"
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@constants/*": [
+        "./src/constants/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@contexts/*": [
+        "./src/contexts/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
       ]
     },
     "incremental": true
@@ -33,6 +48,7 @@
     "**/*.js",
     "**/*.jsx",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "custom.d.ts"
   ]
 }

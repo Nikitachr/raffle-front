@@ -17,10 +17,20 @@
     "production:clean": "rimraf out/"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "babel-plugin-styled-components": "^2.0.7",
     "dotenv": "^16.0.0",
+    "ethers": "^5.6.8",
+    "immer": "^9.0.14",
+    "moralis": "^1.8.0",
     "next": "^12.1.5",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-minimal-pie-chart": "^8.3.0",
+    "react-moralis": "^1.4.0",
+    "styled-components": "^5.3.5",
+    "web3modal": "^1.9.7",
+    "web3uikit": "^0.1.155"
   },
   "devDependencies": {
     "@testing-library/react": "^13.1.1",
@@ -32,6 +42,8 @@
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "autoprefixer": "^10.4.2",
+    "babel-plugin-inline-react-svg": "^2.0.1",
+    "babel-plugin-module-resolver": "^4.1.0",
     "cross-env": "^7.0.3",
     "cssnano": "^5.1.7",
     "eslint": "^8.13.0",

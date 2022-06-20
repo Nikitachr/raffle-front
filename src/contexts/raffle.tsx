@@ -64,7 +64,7 @@ export const RaffleContextProvider: FC<PropsWithChildren<any>> = ({ children }) 
   }, [dispatch, logout])
 
   useEffect(() => {
-    if (chainId !== MUMBAI_ID) {
+    if (chainId && chainId !== MUMBAI_ID) {
       setIsChainModalOpen(true)
     }
   }, [chainId, isWeb3Enabled, toggleChainModal])

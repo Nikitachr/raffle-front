@@ -22,6 +22,7 @@ type RaffleContextActions = {
   startNewGame: () => void
   toggleModal: () => void
   toggleRulesModal: () => void
+  toggleChainModal: () => void
 }
 
 const initialState: IRaffleState = {
@@ -35,21 +36,23 @@ const initialState: IRaffleState = {
   pendingHistory: true,
 }
 
-type RaffleContextData = IRaffleState & { isModalOpen: boolean; isRulesModalOpen: boolean }
+type RaffleContextData = IRaffleState & { isModalOpen: boolean; isRulesModalOpen: boolean; isChainModalOpen: boolean }
 
 export const raffleContext = createContext<RaffleContextData & RaffleContextActions>(null as any)
 
 export const RaffleContextProvider: FC<PropsWithChildren<any>> = ({ children }) => {
-  const { chainId, switchNetwork } = useChain()
+  const { chainId } = useChain()
   const { enableWeb3, isWeb3Enabled, user, isAuthenticated, isWeb3EnableLoading, logout } = useMoralis()
   const [state, dispatch] = useReducer(raffleReducer, initialState)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isRulesModalOpen, setIsRulesModalOpen] = useState(false)
+  const [isChainModalOpen, setIsChainModalOpen] = useState(false)
 
   const addNotification = useNotification()
 
   const toggleModal = useCallback(() => setIsModalOpen((s) => !s), [setIsModalOpen])
   const toggleRulesModal = useCallback(() => setIsRulesModalOpen((s) => !s), [setIsRulesModalOpen])
+  const toggleChainModal = useCallback(() => setIsChainModalOpen((s) => !s), [setIsChainModalOpen])
 
   useEffect(() => {
     const unsubscribe = Moralis.onAccountChanged(() => {
@@ -61,10 +64,10 @@ export const RaffleContextProvider: FC<PropsWithChildren<any>> = ({ children }) 
   }, [dispatch, logout])
 
   useEffect(() => {
-    if (chainId !== MUMBAI_ID && isWeb3Enabled) {
-      switchNetwork(MUMBAI_ID)
+    if (chainId !== MUMBAI_ID) {
+      setIsChainModalOpen(true)
     }
-  }, [chainId, isWeb3Enabled, switchNetwork])
+  }, [chainId, isWeb3Enabled, toggleChainModal])
 
   useRaffleEvents('GameStarted', () => {
     dispatch({ type: ERaffleActionType.SET_RAFFLE_STATE, payload: ERaffleState.OPEN })
@@ -156,12 +159,12 @@ export const RaffleContextProvider: FC<PropsWithChildren<any>> = ({ children }) 
   useEffect(() => {
     if (!isWeb3Enabled) return
     fetchRaffleStateAction(dispatch, fetchRaffleState)
-  }, [dispatch, fetchRaffleState, isWeb3Enabled])
+  }, [dispatch, fetchRaffleState, isWeb3Enabled, chainId])
 
   useEffect(() => {
     if (!isWeb3Enabled || !user?.attributes.ethAddress) return
     fetchOwnerAction(dispatch, fetchOwner, user.attributes.ethAddress)
-  }, [dispatch, fetchOwner, isWeb3Enabled, user?.attributes.ethAddress])
+  }, [dispatch, fetchOwner, isWeb3Enabled, user?.attributes.ethAddress, chainId])
 
   useEffect(() => {
     if (state.raffleState !== ERaffleState.OPEN) return
@@ -178,7 +181,16 @@ export const RaffleContextProvider: FC<PropsWithChildren<any>> = ({ children }) 
 
   return (
     <raffleContext.Provider
-      value={{ ...state, startNewGame, isModalOpen, toggleModal, isRulesModalOpen, toggleRulesModal }}
+      value={{
+        ...state,
+        startNewGame,
+        isModalOpen,
+        toggleModal,
+        isRulesModalOpen,
+        toggleRulesModal,
+        isChainModalOpen,
+        toggleChainModal,
+      }}
     >
       {children}
     </raffleContext.Provider>

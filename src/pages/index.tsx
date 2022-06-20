@@ -9,9 +9,11 @@ import { DepositModal } from '@components/DepositModal'
 import { Rules } from '@components/Rules'
 import { RulesModal } from '@components/RulesModal'
 import { HistoryWidget } from '@components/HistoryWidget'
+import { ChainModal } from '@components/ChainModal'
 
 const Home: NextPage = () => {
-  const { isOwner, pendingRaffleState, raffleState, isModalOpen, isRulesModalOpen, history } = useContext(raffleContext)
+  const { isOwner, pendingRaffleState, raffleState, isModalOpen, isRulesModalOpen, history, isChainModalOpen } =
+    useContext(raffleContext)
 
   const { runContractFunction } = useRaffleContract({ functionName: 'startNewGame' })
   const { runContractFunction: withdraw } = useRaffleContract({ functionName: 'withdraw' })
@@ -39,6 +41,7 @@ const Home: NextPage = () => {
           <HistoryWidget history={history} />
           {isModalOpen && <DepositModal />}
           {isRulesModalOpen && <RulesModal />}
+          {isChainModalOpen && <ChainModal />}
         </div>
       </div>
       <Rules />
